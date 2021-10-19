@@ -1,0 +1,5 @@
+# install with pip3 install -r requirements.txt
+
+#MicroServidor Flask
+flask
+flask-restful
