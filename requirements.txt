@@ -1,5 +1,8 @@
 # install with pip3 install -r requirements.txt
 
+fastapi
+uvicorn
+
 #MicroServidor Flask
-flask
-flask-restful
+#flask
+#flask-restful
