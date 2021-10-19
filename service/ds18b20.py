@@ -2,10 +2,13 @@ import glob
 
 base_dir = '/sys/bus/w1/devices/'
 # busqueda recursiva, se obtiene la primer coincidencia
-device_folder = glob.glob(base_dir + '28*')[0]
-device_file = device_folder + '/w1_slave'
+#device_folder = glob.glob(base_dir + '28*')[0]
+#device_file = device_folder + '/w1_slave'
 
 def read_temp_raw():
+	# busqueda recursiva, se obtiene la primer coincidencia
+	device_folder = glob.glob(base_dir + '28*')[0]
+	device_file = device_folder + '/w1_slave'
 	f = open(device_file, 'r')
 	lines = f.readlines()
 	f.close()

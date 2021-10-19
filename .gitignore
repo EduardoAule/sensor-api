@@ -1,5 +1,9 @@
 __pycache__
 
+./controller/__pycache__
+
+./service/__pycache__
+
 test_ds18b20.py
 
 prometheus_test.py
