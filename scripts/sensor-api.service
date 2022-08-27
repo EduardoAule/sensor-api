@@ -1,0 +1,13 @@
+[Unit]
+Description = FastAPI Python command to do useful stuff
+After=network-online.target
+
+[Service]
+# User=pi
+Restart=on-failure
+WorkingDirectory=/home/pi/Documents/sensor-api
+ExecStart=/usr/bin/python -m uvicorn main:app --host 0.0.0.0 --port 8000
+RestartSec=5s
+
+[Install]
+WantedBy = multi-user.target
