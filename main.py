@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 from models import ModelName
 from controller import controller as con
 
@@ -17,8 +17,21 @@ async def root():
 async def read_sensors(ds_id: str):
 	if ds_id == "ds_1":
 		temp = con.Controller.read_DS18B20()
-		return {"temperature": temp}
+		return {"temperature": temp[0], "tempF": temp[1]}
 	return {"sensor": "404 - not sensor found!"}
+
+
+# Para Prometheus se requiere del endpoint /metrics
+@app.get("/metrics")
+async def read_sensors():
+	temp = con.Controller.read_DS18B20()
+	# Response - When you return a Response directly its data is not validated,
+	# converted (serialized), nor documented automatically.
+	if temp is not None:
+		return Response('# HELP local_temp local temperature\n# TYPE local_temp gauge\nlocal_temp {}\n# HELP local_tempfahrenheit local fahrenheit\n# TYPE local_fahrenheit gauge\nlocal_tempfahrenheit {}\n'.format(float(temp[0]), float(temp[1])), 200, {'Content-Type': 'text/plain; charset=utf-8'} )
+	else:
+		return 'Could not read from DS.', 200, {'Content-Type': 'text/plain; charset=utf-8'}
+	#return {"temperature": temp}
 
 #  http://127.0.0.1:8000/sensor/foo
 # item_id es str
